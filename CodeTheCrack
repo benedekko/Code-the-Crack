@@ -1,0 +1,40 @@
+import random
+import tkinter as tk
+
+secret_code = "569812893"
+guesses = 0
+max_guesses = 100
+
+root = tk.Tk()
+
+def start_game():
+    start_button.destroy()
+    message_label.destroy()
+    guess_label = tk.Label(root, text="Enter your guess: ")
+    guess_label.pack()
+    guess_entry = tk.Entry(root)
+    guess_entry.pack()
+    check_button = tk.Button(root, text="Check Guess", command=lambda: check_guess(guess_entry))
+    check_button.pack()
+
+def check_guess(guess_entry):
+    global guesses
+    guess = guess_entry.get()
+    guesses += 1
+    
+    if guess == secret_code:
+        result_label.config(text="Congratulations! You guessed the secret code in " + str(guesses) + " guesses.")
+        guess_entry.config(state="disabled")
+        check_button.config(state="disabled")
+    else:
+        result_label.config(text="Sorry, that's not the secret code. You have " + str(max_guesses - guesses) + " guesses remaining.")
+
+root.title("Code the Crack")
+message_label = tk.Label(root, text="Press the start button to begin the game.")
+message_label.pack()
+start_button = tk.Button(root, text="Start Game", command=start_game)
+start_button.pack()
+result_label = tk.Label(root, text="")
+result_label.pack()
+
+root.mainloop()
